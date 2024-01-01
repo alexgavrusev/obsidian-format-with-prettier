@@ -1,0 +1,11 @@
+{
+	"id": "prettier-2",
+	"name": "Prettier Format 2",
+	"version": "0.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Format files in your vault using Prettier.",
+	"author": "Alex Gavrusev",
+	"authorUrl": "https://gavrusev.dev",
+	"fundingUrl": "https://ko-fi.com/gavrusev",
+	"isDesktopOnly": false
+}

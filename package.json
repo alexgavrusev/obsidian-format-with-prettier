@@ -1,0 +1,40 @@
+{
+	"name": "obsidian-plugin-prettier-2",
+	"version": "0.0.0",
+	"description": "Format files in your Obsidian vault using Prettier.",
+	"main": "main.js",
+	"scripts": {
+		"prepare": "is-ci || husky install",
+		"dev": "node esbuild.config.mjs",
+		"lint": "eslint .",
+		"format": "prettier --write .",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
+		"version": "node version-bump.mjs && npm run changelog && git add ."
+	},
+	"keywords": [
+		"Obsidian plugin",
+		"Prettier"
+	],
+	"author": "Alex Gavrusev <alex@gavrusev.dev>",
+	"license": "MIT",
+	"dependencies": {
+		"obsidian": "1.4.11",
+		"prettier": "3.1.1",
+		"tslib": "2.6.2"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "18.4.3",
+		"@commitlint/config-conventional": "18.4.3",
+		"@types/node": "^16.11.6",
+		"@typescript-eslint/eslint-plugin": "6.17.0",
+		"@typescript-eslint/parser": "6.17.0",
+		"builtin-modules": "3.3.0",
+		"conventional-changelog-cli": "4.1.0",
+		"esbuild": "0.19.11",
+		"eslint": "8.56.0",
+		"husky": "^8.0.0",
+		"is-ci": "3.0.1",
+		"typescript": "5.3.3"
+	}
+}
