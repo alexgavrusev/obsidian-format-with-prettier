@@ -131,8 +131,6 @@ export default class PrettierPlugin extends Plugin {
 		const text = editor.getValue();
 
 		try {
-			console.log(this.prettierConfigLoader.getOptions());
-
 			const {
 				formatted: formattedText,
 				cursorOffset: formattedTextCursorOffset,
