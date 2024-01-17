@@ -1,7 +1,6 @@
 import {
 	App,
 	Editor,
-	MarkdownView,
 	Notice,
 	Plugin,
 	PluginSettingTab,
@@ -39,7 +38,7 @@ export default class PrettierPlugin extends Plugin {
 			return;
 		}
 
-		const editor = this.getEditor();
+		const editor = this.app.workspace.activeEditor?.editor;
 
 		if (!editor) {
 			return;
@@ -61,16 +60,6 @@ export default class PrettierPlugin extends Plugin {
 		this.app,
 		this.onFileSave,
 	);
-
-	private getEditor(): Editor | null {
-		const activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
-
-		if (!activeLeaf) {
-			return null;
-		}
-
-		return activeLeaf.editor;
-	}
 
 	async onload() {
 		await this.loadSettings();
