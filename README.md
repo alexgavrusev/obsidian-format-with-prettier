@@ -1,10 +1,10 @@
-# obsidian-plugin-prettier-2
+# obsidian-format-with-prettier
 
 Format files in your Obsidian vault using [Prettier](https://prettier.io)
 
 ## Installation
 
-Unzip the `prettier-2.zip` from the [latest release](https://github.com/alexgavrusev/obsidian-plugin-prettier-2/releases/latest) into the `.obsidian/plugins` folder of your vault.
+Unzip the `format-with-prettier.zip` from the [latest release](https://github.com/alexgavrusev/obsidian-format-with-prettier/releases/latest) into the `.obsidian/plugins` folder of your vault.
 
 Note that you might have to reopen your vault for the plugin to show up under "Installed plugins"
 

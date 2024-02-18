@@ -28,7 +28,7 @@ jobs:
             - name: Create ZIP of release
               uses: montudor/action-zip@v1
               with:
-                  args: zip -qq -r prettier-2.zip main.js manifest.json
+                  args: zip -qq -r format-with-prettier.zip main.js manifest.json
 
             - name: Create release
               env:
@@ -39,4 +39,4 @@ jobs:
                   gh release create "$tag" \
                     -F CHANGELOG.md \
                     --draft \
-                    prettier-2.zip main.js manifest.json
+                    format-with-prettier.zip main.js manifest.json
