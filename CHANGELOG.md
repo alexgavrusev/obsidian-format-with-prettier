@@ -1,3 +1,10 @@
+## [0.2.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.1.1...0.2.0) (2024-02-18)
+
+
+### Features
+
+* rename to format-with-prettier ([2c68d29](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/2c68d290100ca408f68c11b3b7b01652da8585c3))
+
 ## [0.1.1](https://github.com/alexgavrusev/obsidian-plugin-prettier-2/compare/0.1.0...0.1.1) (2024-01-17)
 
 
