@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-    "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog --config .changelogrc.js -i CHANGELOG.md -s",
     "version": "node version-bump.mjs && npm run changelog && git add ."
   },
   "keywords": [
