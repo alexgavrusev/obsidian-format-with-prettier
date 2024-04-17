@@ -1,0 +1,28 @@
+# the core goal is for dependabot not to be noisy
+# inspired by https://github.com/sindresorhus/type-fest/pull/843
+
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "chore"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    versioning-strategy: "increase-if-necessary"
+    groups:
+      development:
+        dependency-type: "development"
+      production:
+        dependency-type: "production"
+    commit-message:
+      prefix: "chore(deps)"
