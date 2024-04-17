@@ -8,6 +8,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v3
@@ -19,6 +21,10 @@ jobs:
 
       - name: Check format
         run: npm run format:check
+
+      - name: Check commit messages
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD --verbose
 
       - name: Lint
         run: npm run lint
