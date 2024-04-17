@@ -1,10 +1,10 @@
 import {
-	App,
-	Editor,
-	Notice,
-	Plugin,
-	PluginSettingTab,
-	Setting,
+  App,
+  Editor,
+  Notice,
+  Plugin,
+  PluginSettingTab,
+  Setting,
 } from "obsidian";
 
 import * as prettier from "prettier/standalone";
@@ -15,166 +15,160 @@ import * as typescriptPlugin from "prettier/plugins/typescript";
 import * as babelPlugin from "prettier/plugins/babel";
 
 import {
-	cursorOffsetToEditorPosition,
-	editorPositionToCursorOffset,
+  cursorOffsetToEditorPosition,
+  editorPositionToCursorOffset,
 } from "./cursor-position-utils";
 import { VimWriteCommandPatcher } from "./vim-write-command-patcher";
 import { PrettierConfigLoader } from "./prettier-config-loader";
 import { SaveFileCommandCallback } from "./save-file-command-callback";
 
 interface PrettierPluginSettings {
-	formatOnSave: boolean;
+  formatOnSave: boolean;
 }
 
 const DEFAULT_SETTINGS: PrettierPluginSettings = {
-	formatOnSave: true,
+  formatOnSave: true,
 };
 
 export default class PrettierPlugin extends Plugin {
-	settings: PrettierPluginSettings;
+  settings: PrettierPluginSettings;
 
-	private onFileSave = () => {
-		if (!this.settings.formatOnSave) {
-			return;
-		}
+  private onFileSave = () => {
+    if (!this.settings.formatOnSave) {
+      return;
+    }
 
-		const editor = this.app.workspace.activeEditor?.editor;
+    const editor = this.app.workspace.activeEditor?.editor;
 
-		if (!editor) {
-			return;
-		}
+    if (!editor) {
+      return;
+    }
 
-		void this.formatFile(editor);
-	};
+    void this.formatFile(editor);
+  };
 
-	private readonly vimWriteCommandPatcher = new VimWriteCommandPatcher(
-		this.app,
-	);
-	private readonly prettierConfigLoader = new PrettierConfigLoader(
-		this.app,
-		(ref) => {
-			this.registerEvent(ref);
-		},
-	);
-	private readonly saveFileCommandCallback = new SaveFileCommandCallback(
-		this.app,
-		this.onFileSave,
-	);
+  private readonly vimWriteCommandPatcher = new VimWriteCommandPatcher(
+    this.app,
+  );
+  private readonly prettierConfigLoader = new PrettierConfigLoader(
+    this.app,
+    (ref) => {
+      this.registerEvent(ref);
+    },
+  );
+  private readonly saveFileCommandCallback = new SaveFileCommandCallback(
+    this.app,
+    this.onFileSave,
+  );
 
-	async onload() {
-		await this.loadSettings();
+  async onload() {
+    await this.loadSettings();
 
-		this.addSettingTab(new PrettierSettingTab(this.app, this));
+    this.addSettingTab(new PrettierSettingTab(this.app, this));
 
-		this.addCommands();
+    this.addCommands();
 
-		await this.prettierConfigLoader.onload();
-		this.vimWriteCommandPatcher.onload();
-		this.saveFileCommandCallback.onload();
-	}
+    await this.prettierConfigLoader.onload();
+    this.vimWriteCommandPatcher.onload();
+    this.saveFileCommandCallback.onload();
+  }
 
-	onunload() {
-		this.vimWriteCommandPatcher.onunload();
-		this.saveFileCommandCallback.onunload();
-	}
+  onunload() {
+    this.vimWriteCommandPatcher.onunload();
+    this.saveFileCommandCallback.onunload();
+  }
 
-	async loadSettings() {
-		this.settings = Object.assign(
-			{},
-			DEFAULT_SETTINGS,
-			(await this.loadData()) as PrettierPluginSettings | null,
-		);
-	}
+  async loadSettings() {
+    this.settings = Object.assign(
+      {},
+      DEFAULT_SETTINGS,
+      (await this.loadData()) as PrettierPluginSettings | null,
+    );
+  }
 
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
 
-	private addCommands() {
-		this.addCommand({
-			id: "format-file",
-			name: "Format current file",
-			editorCheckCallback: (checking, editor, ctx) => {
-				const file = ctx.file;
+  private addCommands() {
+    this.addCommand({
+      id: "format-file",
+      name: "Format current file",
+      editorCheckCallback: (checking, editor, ctx) => {
+        const file = ctx.file;
 
-				if (!file) {
-					return false;
-				}
+        if (!file) {
+          return false;
+        }
 
-				if (checking) {
-					return true;
-				}
+        if (checking) {
+          return true;
+        }
 
-				void this.formatFile(editor);
-			},
-		});
-	}
+        void this.formatFile(editor);
+      },
+    });
+  }
 
-	private async formatFile(editor: Editor) {
-		const file = this.app.workspace.getActiveFile();
+  private async formatFile(editor: Editor) {
+    const file = this.app.workspace.getActiveFile();
 
-		if (!file) {
-			return;
-		}
+    if (!file) {
+      return;
+    }
 
-		const text = editor.getValue();
+    const text = editor.getValue();
 
-		try {
-			const {
-				formatted: formattedText,
-				cursorOffset: formattedTextCursorOffset,
-			} = await prettier.formatWithCursor(text, {
-				filepath: file.path,
-				cursorOffset: editorPositionToCursorOffset(
-					editor.getCursor(),
-					text,
-				),
-				plugins: [
-					markdownPlugin,
-					htmlPlugin,
-					estreePlugin,
-					typescriptPlugin,
-					babelPlugin,
-				],
-				...this.prettierConfigLoader.getOptions(),
-			});
+    try {
+      const {
+        formatted: formattedText,
+        cursorOffset: formattedTextCursorOffset,
+      } = await prettier.formatWithCursor(text, {
+        filepath: file.path,
+        cursorOffset: editorPositionToCursorOffset(editor.getCursor(), text),
+        plugins: [
+          markdownPlugin,
+          htmlPlugin,
+          estreePlugin,
+          typescriptPlugin,
+          babelPlugin,
+        ],
+        ...this.prettierConfigLoader.getOptions(),
+      });
 
-			editor.setValue(formattedText);
-			editor.setCursor(
-				cursorOffsetToEditorPosition(
-					formattedTextCursorOffset,
-					formattedText,
-				),
-			);
-		} catch (e) {
-			new Notice(
-				"Failed to format file, see the Developer console for more details",
-			);
-			console.error(e);
-		}
-	}
+      editor.setValue(formattedText);
+      editor.setCursor(
+        cursorOffsetToEditorPosition(formattedTextCursorOffset, formattedText),
+      );
+    } catch (e) {
+      new Notice(
+        "Failed to format file, see the Developer console for more details",
+      );
+      console.error(e);
+    }
+  }
 }
 
 class PrettierSettingTab extends PluginSettingTab {
-	plugin: PrettierPlugin;
+  plugin: PrettierPlugin;
 
-	constructor(app: App, plugin: PrettierPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
+  constructor(app: App, plugin: PrettierPlugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
 
-	display(): void {
-		const { containerEl } = this;
+  display(): void {
+    const { containerEl } = this;
 
-		containerEl.empty();
+    containerEl.empty();
 
-		new Setting(containerEl).setName("Format on save").addToggle((toggle) =>
-			toggle
-				.setValue(this.plugin.settings.formatOnSave)
-				.onChange(async (value) => {
-					this.plugin.settings.formatOnSave = value;
-					await this.plugin.saveSettings();
-				}),
-		);
-	}
+    new Setting(containerEl).setName("Format on save").addToggle((toggle) =>
+      toggle
+        .setValue(this.plugin.settings.formatOnSave)
+        .onChange(async (value) => {
+          this.plugin.settings.formatOnSave = value;
+          await this.plugin.saveSettings();
+        }),
+    );
+  }
 }
