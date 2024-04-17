@@ -20,8 +20,8 @@
   "author": "Alex Gavrusev <alex@gavrusev.dev>",
   "license": "MIT",
   "dependencies": {
-    "obsidian": "1.4.11",
-    "prettier": "3.1.1",
+    "obsidian": "1.5.7",
+    "prettier": "3.2.5",
     "tslib": "2.6.2"
   },
   "devDependencies": {
