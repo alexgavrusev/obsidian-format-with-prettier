@@ -23,8 +23,7 @@ jobs:
         run: npm run format:check
 
       - name: Check commit messages
-        if: github.event_name == 'pull_request'
-        run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD --verbose
+        run: npx commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
       - name: Lint
         run: npm run lint
