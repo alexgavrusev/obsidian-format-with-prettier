@@ -1,3 +1,15 @@
+## [0.4.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.3.0...0.4.0) (2024-05-18)
+
+
+### Features
+
+* use all builtin prettier plugins ([8f1902d](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/8f1902d2b0a4cfd0642ca6017e61040b6d1379af))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump the development group across 1 directory with 7 updates ([3c5e0b0](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/3c5e0b0140bc824588e5ac2193015201cd3b20c5))
+
 ## [0.3.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.2.0...0.3.0) (2024-04-17)
 
 
