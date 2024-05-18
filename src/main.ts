@@ -7,13 +7,6 @@ import {
   Setting,
 } from "obsidian";
 
-import * as prettier from "prettier/standalone";
-import * as markdownPlugin from "prettier/plugins/markdown";
-import * as htmlPlugin from "prettier/plugins/html";
-import * as estreePlugin from "prettier/plugins/estree";
-import * as typescriptPlugin from "prettier/plugins/typescript";
-import * as babelPlugin from "prettier/plugins/babel";
-
 import {
   cursorOffsetToEditorPosition,
   editorPositionToCursorOffset,
@@ -21,6 +14,7 @@ import {
 import { VimWriteCommandPatcher } from "./vim-write-command-patcher";
 import { PrettierConfigLoader } from "./prettier-config-loader";
 import { SaveFileCommandCallback } from "./save-file-command-callback";
+import { format } from "./format";
 
 interface PrettierPluginSettings {
   formatOnSave: boolean;
@@ -123,17 +117,11 @@ export default class PrettierPlugin extends Plugin {
       const {
         formatted: formattedText,
         cursorOffset: formattedTextCursorOffset,
-      } = await prettier.formatWithCursor(text, {
+      } = await format({
+        text,
         filepath: file.path,
         cursorOffset: editorPositionToCursorOffset(editor.getCursor(), text),
-        plugins: [
-          markdownPlugin,
-          htmlPlugin,
-          estreePlugin,
-          typescriptPlugin,
-          babelPlugin,
-        ],
-        ...this.prettierConfigLoader.getOptions(),
+        prettierOptions: this.prettierConfigLoader.getOptions(),
       });
 
       editor.setValue(formattedText);
