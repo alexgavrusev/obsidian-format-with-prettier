@@ -1,0 +1,281 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`format > embedded languages > should format angular 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# Angular note
+
+\`\`\`typescript
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [],
+  template: \`
+    <h1>
+      {{ title }}
+    </h1>
+  \`,
+  styleUrls: ["./app.component.css"],
+})
+export class AppComponent {
+  title = "default";
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format css 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# CSS note
+
+\`\`\`css
+h1 {
+  color: red;
+  font-size: 5em;
+}
+
+p {
+  color: black;
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format flow 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# Flow note
+
+\`\`\`js
+// @flow
+opaque type ID = string;
+
+function identity(x: ID): ID {
+  return x;
+}
+export type { ID };
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format graphql 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# GraphQL note
+
+\`\`\`graphql
+{
+  project(name: "GraphQL") {
+    tagline
+  }
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format handlebars 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# Handlebars note
+
+\`\`\`handlebars
+<ul class="people_list">{{#each people}}
+    <li>{{this}}</li>{{/each}}
+</ul>
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format html 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# HTML note
+
+\`\`\`html
+<h1>The Crushing Bore</h1>
+<p>By Chris Mills</p>
+
+<h2>Chapter 1: The dark night</h2>
+
+<p>
+  It was a dark night. Somewhere, an owl hooted. The rain lashed down on the…
+</p>
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format js 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# JS note
+
+\`\`\`javascript
+const foo = "bar";
+
+const array = [1, 2, 3];
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format json 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# JSON note
+
+\`\`\`json
+{
+  "foo": "bar",
+  "bar": true,
+
+  "baz": 1
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format jsonc 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# JSON note
+
+\`\`\`jsonc
+{
+  "foo": "bar",
+  // a comment
+  "bar": true,
+
+  "baz": 1,
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format jsx 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# JSX note
+
+\`\`\`jsx
+function MyButton() {
+  return <button>I'm a button</button>;
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format less 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# LESS note
+
+\`\`\`less
+#library() {
+  .colors() {
+    primary: green;
+    secondary: blue;
+  }
+}
+
+.button {
+  color: #library.colors[primary];
+  border-color: #library.colors[secondary];
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format scss 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# SCSS note
+
+\`\`\`scss
+@mixin theme($theme: DarkGray) {
+  background: $theme;
+  box-shadow: 0 0 1px rgba($theme, 0.25);
+  color: #fff;
+}
+
+.info {
+  @include theme;
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format ts 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# TS note
+
+\`\`\`typescript
+const foo: string = "bar";
+
+const array: Array<number> = [1, 2, 3];
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format tsx 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# TSX note
+
+\`\`\`tsx
+function MyButton({ title }: { title: string }) {
+  return <button>{title}</button>;
+}
+\`\`\`
+",
+}
+`;
+
+exports[`format > embedded languages > should format yaml 1`] = `
+{
+  "comments": [],
+  "cursorOffset": 1,
+  "formatted": "# YAML note
+
+\`\`\`yaml
+name: Martin D'vloper #key-value
+
+age: 26
+hobbies:
+  - painting #first list item
+
+  - playing_music #second list item
+  - cooking #third list item
+\`\`\`
+",
+}
+`;
