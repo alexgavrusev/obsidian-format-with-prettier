@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-    "changelog": "conventional-changelog --config .changelogrc.js -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog --config .changelogrc.mjs -i CHANGELOG.md -s",
     "version": "node version-bump.mjs && npm run changelog && git add ."
   },
   "keywords": [
@@ -35,6 +35,7 @@
     "builtin-modules": "4.0.0",
     "common-tags": "1.8.2",
     "conventional-changelog-cli": "5.0.0",
+    "conventional-changelog-conventionalcommits": "8.0.0",
     "esbuild": "0.21.4",
     "eslint": "8.57.0",
     "husky": "^9.0.11",
