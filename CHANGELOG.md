@@ -1,3 +1,13 @@
+## [0.5.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.4.0...0.5.0) (2024-06-17)
+
+### Bug Fixes
+
+* **release:** resolve issue with missing compare url in release header ([984912b](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/984912bd12db48a75c31a3743f18b883602190d3))
+
+### Miscellaneous Chores
+
+* **deps:** bump prettier from 3.2.5 to 3.3.0 in the production group ([e618662](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/e6186627ffa510827da9f988be9810cade64c0a3))
+* **deps:** bump the development group with 5 updates ([6f7a0ba](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/6f7a0ba085de1fe4fc6ce70198078c450cf88d56))
 ## [0.4.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.3.0...0.4.0) (2024-05-18)
 
 
