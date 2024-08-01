@@ -21,9 +21,9 @@
   "author": "Alex Gavrusev <alex@gavrusev.dev>",
   "license": "MIT",
   "dependencies": {
-    "obsidian": "1.5.7",
-    "prettier": "3.3.0",
-    "tslib": "2.6.2"
+    "obsidian": "1.6.6",
+    "prettier": "3.3.3",
+    "tslib": "2.6.3"
   },
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
