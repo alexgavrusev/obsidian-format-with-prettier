@@ -1,3 +1,19 @@
+## [0.6.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.5.0...0.6.0) (2024-08-17)
+
+### Features
+
+* use getFileByPath to load prettier config ([23ac6a9](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/23ac6a98daee1111926546228e3bee7bed87fe8b))
+
+### Bug Fixes
+
+* disable promise lint rule for plugin onload ([d1eb9e3](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/d1eb9e387aee9b58863f5048b6f17bffd3b80b52))
+
+### Miscellaneous Chores
+
+* **ci:** use node 22 ([8fa8228](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/8fa8228442d6317b370ea040349c23cf2a2fc42b))
+* **deps:** bump the development group across 1 directory with 9 updates ([bd51085](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/bd510853beabffce42dcf3da01affdfb74ca0700))
+* **deps:** bump the production group across 1 directory with 3 updates ([7e6e401](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/7e6e401f067ea254cd3c28e831c3c403daca06d5))
+* remove deprecated husky.sh ([35c69ba](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/35c69bae4d001f9b39419a82f9b621524fa700be))
 ## [0.5.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.4.0...0.5.0) (2024-06-17)
 
 ### Bug Fixes
