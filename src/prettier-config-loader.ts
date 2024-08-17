@@ -13,9 +13,9 @@ export class PrettierConfigLoader {
   ) {}
 
   private async readPrettierConfigFile() {
-    const file = this.app.vault.getAbstractFileByPath(PRETTIER_CONFIG_PATH);
+    const file = this.app.vault.getFileByPath(PRETTIER_CONFIG_PATH);
 
-    if (!file || !(file instanceof TFile)) {
+    if (!file) {
       return {};
     }
 
