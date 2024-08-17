@@ -55,6 +55,9 @@ export default class PrettierPlugin extends Plugin {
     this.onFileSave,
   );
 
+  /* eslint-disable-next-line @typescript-eslint/no-misused-promises --
+   * typed as `void` in `obsidian.d.ts`, but shown as `Promise<void>` in obsidian docs
+   */
   async onload() {
     await this.loadSettings();
 
