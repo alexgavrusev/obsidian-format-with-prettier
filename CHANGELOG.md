@@ -1,3 +1,10 @@
+## [0.7.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.6.0...0.7.0) (2024-12-07)
+
+### Miscellaneous Chores
+
+* **deps:** bump the development group across 1 directory with 11 updates ([803ef87](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/803ef87235df87a9de23f808b3253f545ded6e50))
+* **deps:** bump the production group across 1 directory with 2 updates ([9657645](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/965764546e3bc49b57821a16b8d1647158a69d59))
+* **deps:** migrate to flat eslint config ([8480e6e](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/8480e6e254cc907512c84817f02305f694d1a5df))
 ## [0.6.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.5.0...0.6.0) (2024-08-17)
 
 ### Features
