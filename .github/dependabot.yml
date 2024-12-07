@@ -26,3 +26,7 @@ updates:
         dependency-type: "production"
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      - dependency-name: "prettier"
+        # 3.4.0+ currently causes the angular formatting testcase to fail
+        versions: [">=3.4.0", "<3.5.0"]
