@@ -6,6 +6,7 @@ import {
   Plugin,
   PluginSettingTab,
   Setting,
+  TFile,
 } from "obsidian";
 
 import {
@@ -56,54 +57,68 @@ export default class PrettierPlugin extends Plugin {
   );
 
   async onload() {
-    let prevActiveMarkdownView: MarkdownView | null =
-      this.app.workspace.getActiveViewOfType(MarkdownView);
-    let prevActiveMarkdownViewFilepath: string | null =
-      prevActiveMarkdownView?.file?.path ?? null;
+    let prevActiveMarkdownView: MarkdownView | null = null;
+    let prevActiveMarkdownFile: TFile | null = null;
 
     this.registerEvent(
       this.app.workspace.on("active-leaf-change", async () => {
         const currentMarkdownView =
           this.app.workspace.getActiveViewOfType(MarkdownView);
-        const currentMarkdownViewFilepath =
-          currentMarkdownView?.file?.path ?? null;
+        const currentMarkdownFile = currentMarkdownView?.file ?? null;
         this.app.workspace.getActiveViewOfType(MarkdownView);
 
-        const prevMarkdownViewFileExists =
-          prevActiveMarkdownView &&
-          !!prevActiveMarkdownViewFilepath &&
-          (await this.app.vault.adapter.exists(prevActiveMarkdownViewFilepath));
+        const prevMarkdownFileExists =
+          prevActiveMarkdownFile &&
+          (await this.app.vault.adapter.exists(prevActiveMarkdownFile.path));
 
         const isPrevAndCurrentSave =
-          prevActiveMarkdownViewFilepath === currentMarkdownViewFilepath;
+          prevActiveMarkdownFile?.path === currentMarkdownFile?.path;
 
-        if (!prevMarkdownViewFileExists || isPrevAndCurrentSave) {
+        if (!prevMarkdownFileExists || isPrevAndCurrentSave) {
           prevActiveMarkdownView = currentMarkdownView;
-          prevActiveMarkdownViewFilepath = currentMarkdownViewFilepath;
+          prevActiveMarkdownFile = currentMarkdownFile;
 
           console.log(
             "set prev",
-            currentMarkdownViewFilepath,
+            currentMarkdownFile,
             "-----",
-            !prevMarkdownViewFileExists,
+            !prevMarkdownFileExists,
             isPrevAndCurrentSave,
           );
 
           return;
         }
 
-        if (prevActiveMarkdownView?.editor.getValue()) {
+        if (!(prevActiveMarkdownView && prevActiveMarkdownFile)) {
+          throw new Error(
+            "Invariant: markdown view and file should be defined",
+          );
+        }
+
+        console.log(
+          "format",
+          prevActiveMarkdownView.file,
+          "-----",
+          prevActiveMarkdownView.editor,
+          prevActiveMarkdownFile.path,
+          "set",
+          currentMarkdownView,
+          currentMarkdownFile,
+        );
+
+        if (prevActiveMarkdownView.file) {
+          // there should be an editor available
           void this.formatFileInEditor(
             prevActiveMarkdownView.editor,
-            prevActiveMarkdownViewFilepath!,
+            prevActiveMarkdownFile.path,
           );
         } else {
           // file was closed, not just switched away from
-          void this.formatFile(prevActiveMarkdownViewFilepath!);
+          void this.formatFile(prevActiveMarkdownFile.path);
         }
 
         prevActiveMarkdownView = currentMarkdownView;
-        prevActiveMarkdownViewFilepath = currentMarkdownViewFilepath;
+        prevActiveMarkdownFile = currentMarkdownFile;
       }),
     );
 
