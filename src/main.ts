@@ -1,6 +1,7 @@
 import {
   App,
   Editor,
+  MarkdownView,
   Notice,
   Plugin,
   PluginSettingTab,
@@ -14,7 +15,7 @@ import {
 import { VimWriteCommandPatcher } from "./vim-write-command-patcher";
 import { PrettierConfigLoader } from "./prettier-config-loader";
 import { SaveFileCommandCallback } from "./save-file-command-callback";
-import { format } from "./format";
+import { format, formatWithCursor } from "./format";
 
 interface PrettierPluginSettings {
   formatOnSave: boolean;
@@ -32,13 +33,12 @@ export default class PrettierPlugin extends Plugin {
       return;
     }
 
-    const editor = this.app.workspace.activeEditor?.editor;
-
-    if (!editor) {
+    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (!activeView?.file) {
       return;
     }
 
-    void this.formatFile(editor);
+    void this.formatFileInEditor(activeView.editor, activeView.file.path);
   };
 
   private readonly vimWriteCommandPatcher = new VimWriteCommandPatcher(
@@ -55,10 +55,66 @@ export default class PrettierPlugin extends Plugin {
     this.onFileSave,
   );
 
-  /* eslint-disable-next-line @typescript-eslint/no-misused-promises --
-   * typed as `void` in `obsidian.d.ts`, but shown as `Promise<void>` in obsidian docs
-   */
   async onload() {
+    let prevActiveMarkdownView: MarkdownView | null =
+      this.app.workspace.getActiveViewOfType(MarkdownView);
+    let prevActiveMarkdownViewFilepath: string | null =
+      prevActiveMarkdownView?.file?.path ?? null;
+
+    this.registerEvent(
+      this.app.workspace.on("active-leaf-change", async () => {
+        const currentMarkdownView =
+          this.app.workspace.getActiveViewOfType(MarkdownView);
+        const currentMarkdownViewFilepath =
+          currentMarkdownView?.file?.path ?? null;
+        this.app.workspace.getActiveViewOfType(MarkdownView);
+
+        const prevMarkdownViewFileExists =
+          prevActiveMarkdownView &&
+          !!prevActiveMarkdownViewFilepath &&
+          (await this.app.vault.adapter.exists(prevActiveMarkdownViewFilepath));
+
+        const isPrevAndCurrentSave =
+          prevActiveMarkdownViewFilepath === currentMarkdownViewFilepath;
+
+        if (!prevMarkdownViewFileExists || isPrevAndCurrentSave) {
+          prevActiveMarkdownView = currentMarkdownView;
+          prevActiveMarkdownViewFilepath = currentMarkdownViewFilepath;
+
+          console.log(
+            "set prev",
+            currentMarkdownViewFilepath,
+            "-----",
+            !prevMarkdownViewFileExists,
+            isPrevAndCurrentSave,
+          );
+
+          return;
+        }
+
+        if (prevActiveMarkdownView?.editor.getValue()) {
+          void this.formatFileInEditor(
+            prevActiveMarkdownView.editor,
+            prevActiveMarkdownViewFilepath!,
+          );
+        } else {
+          // file was closed, not just switched away from
+          void this.formatFile(prevActiveMarkdownViewFilepath!);
+        }
+
+        prevActiveMarkdownView = currentMarkdownView;
+        prevActiveMarkdownViewFilepath = currentMarkdownViewFilepath;
+      }),
+    );
+
+    // this.registerDomEvent(window, "blur", () => {
+    //   const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    //
+    //   if (view && view.file) {
+    //     void this.formatFile(view.editor, view.file.path);
+    //   }
+    // });
+
     await this.loadSettings();
 
     this.addSettingTab(new PrettierSettingTab(this.app, this));
@@ -102,27 +158,40 @@ export default class PrettierPlugin extends Plugin {
           return true;
         }
 
-        void this.formatFile(editor);
+        void this.formatFileInEditor(editor, file.path);
       },
     });
   }
 
-  private async formatFile(editor: Editor) {
-    const file = this.app.workspace.getActiveFile();
+  private async formatFile(filepath: string) {
+    const text = await this.app.vault.adapter.read(filepath);
 
-    if (!file) {
-      return;
+    try {
+      const formattedText = await format({
+        text,
+        filepath,
+        prettierOptions: this.prettierConfigLoader.getOptions(),
+      });
+
+      await this.app.vault.adapter.write(filepath, formattedText);
+    } catch (e) {
+      new Notice(
+        "Failed to format file, see the Developer console for more details",
+      );
+      console.error(e);
     }
+  }
 
+  private async formatFileInEditor(editor: Editor, filepath: string) {
     const text = editor.getValue();
 
     try {
       const {
         formatted: formattedText,
         cursorOffset: formattedTextCursorOffset,
-      } = await format({
+      } = await formatWithCursor({
         text,
-        filepath: file.path,
+        filepath,
         cursorOffset: editorPositionToCursorOffset(editor.getCursor(), text),
         prettierOptions: this.prettierConfigLoader.getOptions(),
       });

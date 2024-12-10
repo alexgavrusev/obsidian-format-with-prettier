@@ -14,35 +14,50 @@ import * as postcssPlugin from "prettier/plugins/postcss";
 import * as typescriptPlugin from "prettier/plugins/typescript";
 import * as yamlPlugin from "prettier/plugins/yaml";
 
-export type FormatArgs = {
+const PLUGINS = [
+  acornPlugin,
+  angularPlugin,
+  babelPlugin,
+  estreePlugin,
+  flowPlugin,
+  glimmerPlugin,
+  graphqlPlugin,
+  htmlPlugin,
+  markdownPlugin,
+  postcssPlugin,
+  typescriptPlugin,
+  yamlPlugin,
+];
+
+export type FormatWithCursorArgs = {
   text: string;
   filepath: string;
   cursorOffset: number;
   prettierOptions: Options;
 };
 
-export const format = ({
+export const formatWithCursor = ({
   text,
   filepath,
   cursorOffset,
   prettierOptions,
-}: FormatArgs) =>
+}: FormatWithCursorArgs) =>
   prettier.formatWithCursor(text, {
     filepath,
     cursorOffset,
-    plugins: [
-      acornPlugin,
-      angularPlugin,
-      babelPlugin,
-      estreePlugin,
-      flowPlugin,
-      glimmerPlugin,
-      graphqlPlugin,
-      htmlPlugin,
-      markdownPlugin,
-      postcssPlugin,
-      typescriptPlugin,
-      yamlPlugin,
-    ],
+    plugins: PLUGINS,
+    ...prettierOptions,
+  });
+
+export type FormatArgs = {
+  text: string;
+  filepath: string;
+  prettierOptions: Options;
+};
+
+export const format = ({ text, filepath, prettierOptions }: FormatArgs) =>
+  prettier.format(text, {
+    filepath,
+    plugins: PLUGINS,
     ...prettierOptions,
   });

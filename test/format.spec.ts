@@ -1,22 +1,22 @@
 import { describe, it, expect } from "vitest";
 import { stripIndent } from "common-tags";
 
-import { FormatArgs, format } from "../src/format";
+import { FormatWithCursorArgs, formatWithCursor } from "../src/format";
 
-describe("format", () => {
+describe("formatWithCursor", () => {
   describe("embedded languages", () => {
     const filepath = "note.md";
     const cursorOffset = 1;
     const prettierOptions = {};
 
-    const getArgs = (text: string): FormatArgs => ({
+    const getArgs = (text: string): FormatWithCursorArgs => ({
       filepath,
       cursorOffset,
       prettierOptions,
       text,
     });
 
-    const testFormat = (text: string) => format(getArgs(text));
+    const testFormat = (text: string) => formatWithCursor(getArgs(text));
 
     it("should format js", async () => {
       await expect(
