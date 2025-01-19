@@ -7,6 +7,7 @@ export default tseslint.config(
     ignores: [
       "**/node_modules/**",
       "dist/",
+      ".husky/",
       "main.js",
       "eslint.config.mjs",
       "version-bump.mjs",
