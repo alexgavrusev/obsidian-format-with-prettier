@@ -1,3 +1,9 @@
+## [0.8.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.7.0...0.8.0) (2025-01-19)
+
+### Miscellaneous Chores
+
+* **deps:** bump the development group with 10 updates ([90f0563](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/90f05633e2e681939d706795f54f4cd3f6e9470d))
+* resolve husky deprecation warning ([43674c3](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/43674c3ab7cdc272768f867e9b36ae389a4403f9))
 ## [0.7.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.6.0...0.7.0) (2024-12-07)
 
 ### Miscellaneous Chores
