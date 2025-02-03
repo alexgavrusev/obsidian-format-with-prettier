@@ -1,7 +1,7 @@
 {
   "id": "format-with-prettier",
   "name": "Format with Prettier",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "minAppVersion": "0.15.0",
   "description": "Format files in your vault using Prettier.",
   "author": "Alex Gavrusev",
