@@ -26,23 +26,23 @@
     "tslib": "2.8.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.6.1",
-    "@commitlint/config-conventional": "19.6.0",
-    "@eslint/js": "9.19.0",
+    "@commitlint/cli": "19.7.1",
+    "@commitlint/config-conventional": "19.7.1",
+    "@eslint/js": "9.21.0",
     "@types/common-tags": "1.8.4",
     "@types/node": "^22.4.0",
-    "@typescript-eslint/eslint-plugin": "8.22.0",
-    "@typescript-eslint/parser": "8.22.0",
-    "builtin-modules": "4.0.0",
+    "@typescript-eslint/eslint-plugin": "8.26.0",
+    "@typescript-eslint/parser": "8.26.0",
+    "builtin-modules": "5.0.0",
     "common-tags": "1.8.2",
     "conventional-changelog-cli": "5.0.0",
     "conventional-changelog-conventionalcommits": "8.0.0",
-    "esbuild": "0.24.2",
-    "eslint": "9.19.0",
+    "esbuild": "0.25.0",
+    "eslint": "9.21.0",
     "husky": "^9.0.11",
     "lint-staged": "15.4.3",
-    "typescript": "5.7.3",
-    "typescript-eslint": "8.22.0",
-    "vitest": "3.0.4"
+    "typescript": "5.8.2",
+    "typescript-eslint": "8.26.0",
+    "vitest": "3.0.8"
   }
 }
