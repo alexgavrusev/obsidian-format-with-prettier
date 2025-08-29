@@ -1,3 +1,8 @@
+## [0.12.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.11.0...0.12.0) (2025-08-29)
+
+### Bug Fixes
+
+* use checkCallback for format on save ([b573da9](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/b573da91a4c4b032f0a69a6be0a13e7c092baf7d))
 ## [0.11.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.10.0...0.11.0) (2025-07-06)
 
 ### Miscellaneous Chores
