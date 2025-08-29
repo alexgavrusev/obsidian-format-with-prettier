@@ -1,7 +1,7 @@
 import { App } from "obsidian";
 
 export class SaveFileCommandCallback {
-  private originalSaveCallback?: () => void;
+  private originalSaveCallback?: (checking: boolean) => boolean | undefined;
 
   constructor(
     private readonly app: App,
@@ -19,12 +19,14 @@ export class SaveFileCommandCallback {
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    this.originalSaveCallback = saveCommandDefinition.callback;
+    this.originalSaveCallback = saveCommandDefinition.checkCallback;
 
-    saveCommandDefinition.callback = () => {
+    saveCommandDefinition.checkCallback = (checking: boolean) => {
+      if (checking) {
+        return this.originalSaveCallback?.(checking);
+      }
+
       this.originalSaveCallback?.apply(saveCommandDefinition);
-
       this.onFileSave();
     };
   }
@@ -36,8 +38,8 @@ export class SaveFileCommandCallback {
       return;
     }
 
-    if (saveCommandDefinition.callback && this.originalSaveCallback) {
-      saveCommandDefinition.callback = this.originalSaveCallback;
+    if (saveCommandDefinition.checkCallback && this.originalSaveCallback) {
+      saveCommandDefinition.checkCallback = this.originalSaveCallback;
     }
   }
 }
