@@ -39,7 +39,7 @@ export class PrettierConfigLoader {
     }
   }
 
-  async onload() {
+  onload() {
     const handleConfigFileChange = (file: TFile) => {
       if (file.path === PRETTIER_CONFIG_PATH) {
         void this.loadPrettierOptions();
@@ -47,13 +47,12 @@ export class PrettierConfigLoader {
     };
 
     this.app.workspace.onLayoutReady(() => {
-      // this will be also triggered when the vault is 1st loaded
       this.registerEvent(this.app.vault.on("create", handleConfigFileChange));
       this.registerEvent(this.app.vault.on("delete", handleConfigFileChange));
       this.registerEvent(this.app.vault.on("modify", handleConfigFileChange));
-    });
 
-    await this.loadPrettierOptions();
+      void this.loadPrettierOptions();
+    });
   }
 
   getOptions() {
