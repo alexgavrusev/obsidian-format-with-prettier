@@ -65,7 +65,7 @@ export default class PrettierPlugin extends Plugin {
 
     this.addCommands();
 
-    await this.prettierConfigLoader.onload();
+    this.prettierConfigLoader.onload();
     this.vimWriteCommandPatcher.onload();
     this.saveFileCommandCallback.onload();
   }
