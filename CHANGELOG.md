@@ -1,3 +1,16 @@
+## [0.13.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.12.0...0.13.0) (2025-11-01)
+
+### Bug Fixes
+
+* load config after layout is ready ([1cf732e](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/1cf732ecb227d61a07d169d64b23ebfac1f1de0e))
+
+### Miscellaneous Chores
+
+* bump the github-actions group with 2 updates ([4be8d8a](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/4be8d8a33e463a628b28654b57395249bddb448b))
+* **deps:** bump obsidian from 1.8.7 to 1.10.0 in the production group ([2d4bef0](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/2d4bef056b1840b4ed554dedf1bac09061d78f76))
+* **deps:** bump the development group across 1 directory with 10 updates ([d64933e](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/d64933e27a9e80f23980261ee696820bf0e66878))
+* **deps:** bump the development group across 1 directory with 12 updates ([53e3a11](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/53e3a11d2f42704e7d70b180f69cd0defcde6dd2))
+* remove unused eslint-disable directive ([10ad88f](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/10ad88fd93e15cbcfb686a43975c89ec0e908c4d))
 ## [0.12.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.11.0...0.12.0) (2025-08-29)
 
 ### Bug Fixes
