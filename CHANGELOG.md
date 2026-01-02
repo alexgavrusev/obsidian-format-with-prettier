@@ -1,3 +1,12 @@
+## [0.14.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.13.0...0.14.0) (2026-01-02)
+
+### Miscellaneous Chores
+
+* bump actions/checkout from 5 to 6 in the github-actions group ([0c5988a](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/0c5988a72573d52ca7b70bec711edac4bcc97914))
+* **deps:** bump the development group across 1 directory with 7 updates ([245582b](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/245582b3497debfac9fc01138bd6769f6d7da4e3))
+* **deps:** bump the development group with 10 updates ([05fbee3](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/05fbee39dfd7de5928bb1693d5cc1686a46e843c))
+* **deps:** bump the development group with 7 updates ([5ef0dc4](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/5ef0dc4980755598124237482e3f8ccf6699a50f))
+* **deps:** bump the production group with 2 updates ([ba425a9](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/ba425a98253c55bb600f1cf1d9065e1f7afde33d))
 ## [0.13.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.12.0...0.13.0) (2025-11-01)
 
 ### Bug Fixes
