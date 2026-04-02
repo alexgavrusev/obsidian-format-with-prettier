@@ -1,3 +1,9 @@
+## [0.17.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.16.0...0.17.0) (2026-04-02)
+
+### Miscellaneous Chores
+
+* **deps:** bump the development group with 12 updates ([2c8696d](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/2c8696d061c1beddceb8bb59199f9c58c7bc437d))
+* **deps:** migrate to typescript 6 ([ab3a98d](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/ab3a98d94d81c0050faa9b67d91632931aa13859))
 ## [0.16.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.15.0...0.16.0) (2026-03-14)
 
 ### Miscellaneous Chores
