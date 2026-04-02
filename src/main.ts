@@ -25,7 +25,7 @@ const DEFAULT_SETTINGS: PrettierPluginSettings = {
 };
 
 export default class PrettierPlugin extends Plugin {
-  settings: PrettierPluginSettings;
+  settings!: PrettierPluginSettings;
 
   private onFileSave = () => {
     if (!this.settings.formatOnSave) {
