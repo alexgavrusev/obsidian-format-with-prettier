@@ -23,10 +23,12 @@ export class SaveFileCommandCallback {
 
     saveCommandDefinition.checkCallback = (checking: boolean) => {
       if (checking) {
-        return this.originalSaveCallback?.(checking);
+        return this.originalSaveCallback?.apply(saveCommandDefinition, [
+          checking,
+        ]);
       }
 
-      this.originalSaveCallback?.apply(saveCommandDefinition);
+      this.originalSaveCallback?.apply(saveCommandDefinition, [checking]);
       this.onFileSave();
     };
   }

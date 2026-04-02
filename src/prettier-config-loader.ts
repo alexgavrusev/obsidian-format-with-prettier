@@ -1,4 +1,4 @@
-import { App, EventRef, Notice, TFile, normalizePath } from "obsidian";
+import { App, EventRef, Notice, TAbstractFile, normalizePath } from "obsidian";
 
 import type { Options } from "prettier";
 
@@ -40,7 +40,7 @@ export class PrettierConfigLoader {
   }
 
   onload() {
-    const handleConfigFileChange = (file: TFile) => {
+    const handleConfigFileChange = (file: TAbstractFile) => {
       if (file.path === PRETTIER_CONFIG_PATH) {
         void this.loadPrettierOptions();
       }
