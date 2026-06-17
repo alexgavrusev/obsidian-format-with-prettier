@@ -1,3 +1,11 @@
+## [0.18.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.17.0...0.18.0) (2026-06-17)
+
+### Miscellaneous Chores
+
+* **deps:** bump obsidian from 1.12.3 to 1.13.0 in the production group ([5a0157e](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/5a0157e7a0d5c7a3b434bc9edc3a0e16c98aa16a))
+* **deps:** bump prettier from 3.8.1 to 3.8.3 in the production group ([94ae812](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/94ae8122a204fc85ea65699b01a1572772dbec33))
+* **deps:** bump the development group with 10 updates ([c00aa5a](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/c00aa5af26b12bd5f055d51bf4bb30fd6fe166fe))
+* **deps:** bump the development group with 11 updates ([b898458](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/b898458125b5ebdddf1b4b609466cbf9dd97060e))
 ## [0.17.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.16.0...0.17.0) (2026-04-02)
 
 ### Miscellaneous Chores
