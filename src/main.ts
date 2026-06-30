@@ -72,9 +72,6 @@ export default class PrettierPlugin extends Plugin {
   /** Loads and caches Prettier options from the vault or the plugin settings. */
   public readonly prettierConfigLoader = new PrettierConfigLoader(
     this.app,
-    (ref) => {
-      this.registerEvent(ref);
-    },
     () => this.settings,
   );
 
@@ -92,7 +89,7 @@ export default class PrettierPlugin extends Plugin {
 
     this.addCommands();
 
-    this.prettierConfigLoader.onload();
+    await this.prettierConfigLoader.loadPrettierOptions();
     this.vimWriteCommandPatcher.onload();
     this.saveFileCommandCallback.onload();
   }
@@ -159,7 +156,7 @@ export default class PrettierPlugin extends Plugin {
     }
 
     const text = editor.getValue();
-    const options = this.prettierConfigLoader.getOptions();
+    const options = await this.prettierConfigLoader.getOptions();
 
     if (options === null) {
       new Notice(

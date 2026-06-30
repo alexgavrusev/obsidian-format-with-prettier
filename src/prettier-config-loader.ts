@@ -1,11 +1,4 @@
-import {
-  App,
-  EventRef,
-  Notice,
-  TAbstractFile,
-  TFile,
-  parseYaml,
-} from "obsidian";
+import { App, Notice, parseYaml } from "obsidian";
 import type { Options } from "prettier";
 import type { PrettierPluginSettings } from "./main";
 
@@ -25,12 +18,18 @@ const SUPPORTED_CONFIG_FILES = [
  * Loads and caches Prettier options from either a vault configuration file or
  * the plugin's custom JSON setting, depending on {@link PrettierPluginSettings.useCustomConfig}.
  *
- * Watches the vault for changes to supported config files and reloads
- * automatically via Obsidian's event system.
+ * Uses Just-In-Time (JIT) evaluation with modification time caching to
+ * efficiently detect and load config file changes without relying on file watchers.
  */
 export class PrettierConfigLoader {
   /** Cached options parsed from the vault config file. */
-  private fileOptions: Options = {};
+  private fileOptionsCache: Options = {};
+
+  /** The vault-relative path of the cached config file. */
+  private cachedFilePath: string | null = null;
+
+  /** The modification time of the cached config file, used for cache invalidation. */
+  private cachedMtime: number = 0;
 
   /**
    * The vault-relative path of the config file that was last successfully
@@ -40,113 +39,98 @@ export class PrettierConfigLoader {
 
   constructor(
     private readonly app: App,
-    /**
-     * Registers an Obsidian {@link EventRef} with the plugin so it is
-     * automatically cleaned up on unload.
-     */
-    private readonly registerEvent: (eventRef: EventRef) => void,
     /** Returns the current plugin settings. */
     private readonly getSettings: () => PrettierPluginSettings,
   ) {}
 
   /**
-   * Iterates over {@link SUPPORTED_CONFIG_FILES} in priority order and reads
+   * Iterates over {@link SUPPORTED_CONFIG_FILES} in priority order and evaluates
    * the first one found in the vault root.
+   *
+   * Bypasses the Obsidian `TFile` cache to read dotfiles using `app.vault.adapter`.
+   * Uses the file's modification time (`mtime`) to return cached options instantly
+   * if the file has not changed since the last read.
    *
    * YAML files (`.yml` / `.yaml`) are parsed with Obsidian's `parseYaml`;
    * all other files are treated as JSON.
-   *
-   * On parse failure the error is logged and the loop continues to the next
-   * candidate. Returns an empty object `{}` when no usable file is found.
    *
    * @returns A promise resolving to the parsed {@link Options} object.
    */
   private async readPrettierConfigFile(): Promise<Options> {
     for (const filename of SUPPORTED_CONFIG_FILES) {
-      const abstractFile = this.app.vault.getAbstractFileByPath(filename);
+      const stat = await this.app.vault.adapter.stat(filename);
 
-      if (abstractFile instanceof TFile) {
+      if (stat) {
+        if (
+          this.cachedFilePath === filename &&
+          this.cachedMtime === stat.mtime
+        ) {
+          this.configFilePath = filename;
+          return this.fileOptionsCache;
+        }
+
         try {
-          const fileContents = await this.app.vault.read(abstractFile);
+          const fileContents = await this.app.vault.adapter.read(filename);
           let options: unknown;
 
           if (filename.endsWith(".yml") || filename.endsWith(".yaml")) {
             options = parseYaml(fileContents);
           } else {
-            // Treat extensionless .prettierrc and .json files as JSON
             options = JSON.parse(fileContents || "{}");
           }
 
+          this.cachedFilePath = filename;
+          this.cachedMtime = stat.mtime;
+          this.fileOptionsCache = options as Options;
           this.configFilePath = filename;
-          return options as Options;
-        } catch (e) {
-          console.error(`Prettier Plugin: Failed to parse ${filename}`, e);
+
+          return this.fileOptionsCache;
+        } catch {
+          console.error(`Prettier Plugin: Failed to parse ${filename}`);
           new Notice(`Failed to parse Prettier options from ${filename}`);
-          // Continue loop to try the next file if parsing fails
         }
       }
     }
 
-    // No config file found
     this.configFilePath = null;
-    return {};
+    this.cachedFilePath = null;
+    this.cachedMtime = 0;
+    this.fileOptionsCache = {};
+
+    return this.fileOptionsCache;
   }
 
   /**
-   * Reads the vault config file and stores the result in {@link fileOptions}.
-   *
-   * Called on plugin load and whenever a supported config file is created,
-   * deleted, or modified.
+   * Forces a cache invalidation and reloads the Prettier options from the vault.
    */
   public async loadPrettierOptions() {
-    this.fileOptions = await this.readPrettierConfigFile();
+    this.cachedMtime = 0;
+    await this.readPrettierConfigFile();
   }
 
   /**
-   * Registers vault event listeners for config file changes and triggers an
-   * initial load of Prettier options once the workspace layout is ready.
-   *
-   * Event registration is deferred until `onLayoutReady` to avoid reading
-   * files before the vault index has been fully built.
-   */
-  onload() {
-    const handleConfigFileChange = (file: TAbstractFile) => {
-      if (SUPPORTED_CONFIG_FILES.includes(file.path)) {
-        void this.loadPrettierOptions();
-      }
-    };
-
-    this.app.workspace.onLayoutReady(() => {
-      this.registerEvent(this.app.vault.on("create", handleConfigFileChange));
-      this.registerEvent(this.app.vault.on("delete", handleConfigFileChange));
-      this.registerEvent(this.app.vault.on("modify", handleConfigFileChange));
-
-      void this.loadPrettierOptions();
-    });
-  }
-
-  /**
-   * Returns parsed Prettier options.
+   * Asynchronously returns the parsed Prettier options.
    *
    * - When {@link PrettierPluginSettings.useCustomConfig} is `true`, options
-   *   are parsed from the plugin's `customConfigText` setting.
-   * - Otherwise, returns the options loaded from the vault config file.
+   * are parsed from the plugin's `customConfigText` setting.
+   * - Otherwise, returns the options loaded from the vault config file, utilizing
+   * the JIT modification time cache for performance.
    *
-   * @returns The resolved {@link Options}, or `null` if `useCustomConfig` is
-   *   enabled but `customConfigText` contains invalid JSON.
+   * @returns A promise resolving to the {@link Options}, or `null` if
+   * `useCustomConfig` is enabled but `customConfigText` contains invalid JSON.
    */
-  getOptions(): Options | null {
+  async getOptions(): Promise<Options | null> {
     const settings = this.getSettings();
 
     if (settings.useCustomConfig) {
       try {
         return JSON.parse(settings.customConfigText || "{}") as Options;
-      } catch (e) {
-        console.error("Prettier Plugin: Invalid custom JSON configuration", e);
+      } catch {
+        console.error("Prettier Plugin: Invalid custom JSON configuration");
         return null;
       }
     }
 
-    return this.fileOptions;
+    return await this.readPrettierConfigFile();
   }
 }
