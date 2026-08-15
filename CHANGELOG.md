@@ -1,3 +1,10 @@
+## [0.19.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.18.0...0.19.0) (2026-08-15)
+
+### Miscellaneous Chores
+
+* bump the github-actions group across 1 directory with 2 updates ([2b0b3d1](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/2b0b3d1c2e8d0637c4db3aeb3c4452a2963a53fb))
+* **deps:** bump the development group across 1 directory with 12 updates ([6f0bf04](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/6f0bf04a1874921e6762659887f30b8eea0cafc2))
+* **deps:** bump the production group with 2 updates ([d1321a4](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/d1321a4c640090bef6386c5871de6c4e1dcd01b8))
 ## [0.18.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.17.0...0.18.0) (2026-06-17)
 
 ### Miscellaneous Chores
