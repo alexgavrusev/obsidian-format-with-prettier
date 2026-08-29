@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // taken from `obsidian-linter`, see https://github.com/platers/obsidian-linter/blob/d3515fe32804f4ec495d993f10eabbf4b9fa6161/src/typings/obsidian-ex.d.ts
 
 import { Command } from "obsidian";
@@ -54,12 +53,12 @@ declare module "obsidian" {
     /**
      * @public
      */
-    getState(): any;
+    getState(): unknown;
 
     /**
      * @public
      */
-    setState(state: any, result: ViewStateResult): Promise<void>;
+    setState(state: unknown, result: ViewStateResult): Promise<void>;
   }
 
   export interface ViewStateResult {
