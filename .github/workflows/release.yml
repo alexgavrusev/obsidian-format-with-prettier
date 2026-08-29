@@ -1,8 +1,5 @@
 name: Release Obsidian plugin
 
-permissions:
-  contents: write
-
 on:
   push:
     tags:
@@ -11,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
 
     steps:
       - uses: actions/checkout@v7
@@ -18,17 +19,19 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Build plugin
         run: |
           npm install
           npm run build
 
-      - name: Create ZIP of release
-        uses: montudor/action-zip@v1
+      - name: Attest build provenance
+        uses: actions/attest@v4
         with:
-          args: zip -qq -r format-with-prettier.zip main.js manifest.json
+          subject-path: |
+            main.js
+            manifest.json
 
       - name: Create release
         env:
@@ -37,6 +40,7 @@ jobs:
           tag="${GITHUB_REF#refs/tags/}"
 
           gh release create "$tag" \
+            --title="$tag" \
             -F CHANGELOG.md \
             --draft \
-            format-with-prettier.zip main.js manifest.json
+            main.js manifest.json
