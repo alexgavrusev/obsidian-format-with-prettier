@@ -1,11 +1,4 @@
-import {
-  App,
-  Editor,
-  Notice,
-  Plugin,
-  PluginSettingTab,
-  Setting,
-} from "obsidian";
+import { App, Editor, Notice, Plugin, PluginSettingTab } from "obsidian";
 
 import {
   cursorOffsetToEditorPosition,
@@ -145,18 +138,15 @@ class PrettierSettingTab extends PluginSettingTab {
     this.plugin = plugin;
   }
 
-  display(): void {
-    const { containerEl } = this;
-
-    containerEl.empty();
-
-    new Setting(containerEl).setName("Format on save").addToggle((toggle) =>
-      toggle
-        .setValue(this.plugin.settings.formatOnSave)
-        .onChange(async (value) => {
-          this.plugin.settings.formatOnSave = value;
-          await this.plugin.saveSettings();
-        }),
-    );
+  getSettingDefinitions() {
+    return [
+      {
+        name: "Format on save",
+        control: {
+          type: "toggle",
+          key: "formatOnSave",
+        },
+      } as const,
+    ];
   }
 }
