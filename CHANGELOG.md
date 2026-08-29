@@ -1,3 +1,8 @@
+## [0.20.1](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.20.0...0.20.1) (2026-08-29)
+
+### Bug Fixes
+
+* use new conventional-changelog cli ([fd04be8](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/fd04be824198074144d0689f9d2a442aa880ccc8))
 
 ## [0.20.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.19.0...0.20.0) (2026-08-29)
 
