@@ -1,6 +1,15 @@
+
 ## [0.20.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.19.0...0.20.0) (2026-08-29)
 
+### Features
 
+* add obsidian eslint plugin ([39f42d4](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/39f42d41a7f112622b4ba7c81cfabbb32209e9ba))
+* use declarative settings api ([8b3057a](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/8b3057a1fbe377d3ac7a157ceb3aaad8992cb24d))
+
+### Miscellaneous Chores
+
+* ci and build modernization ([ad9dbef](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/ad9dbef69bfc8ae0b162e43987c2ab5abd272259))
+* release 0.20.0 ([d61fe76](https://github.com/alexgavrusev/obsidian-format-with-prettier/commit/d61fe764e3f67de024ddbb989c38217b75844cec))
 
 ## [0.19.0](https://github.com/alexgavrusev/obsidian-format-with-prettier/compare/0.18.0...0.19.0) (2026-08-15)
 

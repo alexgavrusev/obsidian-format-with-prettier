@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-    "changelog": "conventional-changelog --config .changelogrc.mjs -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog --config .changelogrc.mjs -i CHANGELOG.md",
     "version": "node version-bump.mjs && npm run changelog && git add ."
   },
   "keywords": [
@@ -34,8 +34,8 @@
     "@typescript-eslint/eslint-plugin": "8.67.0",
     "@typescript-eslint/parser": "8.67.0",
     "common-tags": "1.8.2",
-    "conventional-changelog-cli": "5.0.0",
-    "conventional-changelog-conventionalcommits": "10.3.0",
+    "conventional-changelog": "8.1.3",
+    "conventional-changelog-conventionalcommits": "10.4.0",
     "esbuild": "0.28.2",
     "eslint": "10.8.1",
     "eslint-plugin-obsidianmd": "^0.4.2",
