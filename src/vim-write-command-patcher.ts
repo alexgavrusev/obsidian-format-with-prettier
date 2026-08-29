@@ -23,8 +23,7 @@ export class VimWriteCommandPatcher {
     }
 
     this.originalCodeMirrorAdapterSaveCommand =
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      codeMirrorAdapterCommands.save;
+      codeMirrorAdapterCommands.save?.bind(codeMirrorAdapterCommands);
 
     codeMirrorAdapterCommands.save = () => {
       this.originalCodeMirrorAdapterSaveCommand?.apply(

@@ -130,7 +130,7 @@ export default class PrettierPlugin extends Plugin {
       );
     } catch (e) {
       new Notice(
-        "Failed to format file, see the Developer console for more details",
+        "Failed to format file, see the developer console for more details",
       );
       console.error(e);
     }
